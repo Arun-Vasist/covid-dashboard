@@ -18,9 +18,13 @@ tooltip_text = {
 def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
         state_name = 'Maharashtra'
-        rank = html.H5("-", style={'color': 'white'})
-        vs_national_avg = html.H2("-", style={'color': 'white'})
         result = state_metrics_df.loc[state_name, metric]
+        color = '#d91e18' if result > state_metrics_df.loc['India', metric] else '#27ae60'
+        vs_national_avg = html.H2(
+            f"{print_delta(now=result, prev=state_metrics_df.loc['India', metric])} vs National Avg",
+            style={'color': color})
+        rank = html.H5(
+            f"Rank : {int(state_metrics_df.loc[state_name, f'{metric}_rank'])} of {state_metrics_df.shape[0] - 1}")
     else:
         state_id = click_data['points'][0]['location']
         state_name = reverse_state_id_map[state_id]
