@@ -45,13 +45,3 @@ server = app.server
 #     server = app.server
 # else:
 #     app.run_server()
-
-
-# date_wise_metrics_cum_sum = date_wise_metrics.copy()
-# for col in date_wise_metrics_cum_sum.columns:
-#     date_wise_metrics_cum_sum[col] = date_wise_metrics_cum_sum[col].cumsum()
-#
-# for col in date_wise_metrics_cum_sum.columns:
-#     metric, state = col
-#     if metric == 'Confirmed':
-#         date_wise_metrics_cum_sum[('case_fatality_rate', state)] = date_wise_metrics_cum_sum[('Deceased', state)] / date_wise_metrics_cum_sum[col].shift(15)

@@ -18,24 +18,24 @@ tooltip_text = {
 def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
         state_name = 'India'
-        rank = html.H4("-", style={'color': 'white'})
-        vs_national_avg = html.H1("-", style={'color': 'white'})
+        rank = html.H5("-", style={'color': 'white'})
+        vs_national_avg = html.H2("-", style={'color': 'white'})
         result = state_metrics_df.loc[state_name, metric]
     else:
         state_id = click_data['points'][0]['location']
         state_name = reverse_state_id_map[state_id]
         result = state_metrics_df.loc[state_name, metric]
         color = '#d91e18' if result > state_metrics_df.loc['India', metric] else '#27ae60'
-        vs_national_avg = html.H1(
+        vs_national_avg = html.H2(
             f"{print_delta(now=result, prev=state_metrics_df.loc['India', metric])} vs National Avg",
                                   style={'color': color})
-        rank = html.H4(f"Rank : {int(state_metrics_df.loc[state_name, f'{metric}_rank'])} of {state_metrics_df.shape[0] - 1}")
+        rank = html.H5(f"Rank : {int(state_metrics_df.loc[state_name, f'{metric}_rank'])} of {state_metrics_df.shape[0] - 1}")
 
     card_body = dbc.CardBody([
-                    html.H3(f'{state_name} - {fix_name(metric)} (Cumulative)',
+                    html.H5(f'{state_name} - {fix_name(metric)}',
                             id=f'kpi_{metric}_header',
                             style={"textDecoration": "underline", "cursor": "pointer"}),
-                    html.H1(print_formatted(result, metric), style={'font-weight': 'bold', 'font-size': 55}),
+                    html.H1(print_formatted(result, metric), style={'font-weight': 'bold', 'font-size': 50}),
                     vs_national_avg,
                     rank,
                     dbc.Tooltip(tooltip_text[metric], target=f'kpi_{metric}_header')
@@ -100,7 +100,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
     header_card = dbc.Card(
         html.H1(
             'India Covid Dashboard',
-            style={'margin-left': '20px', 'font-size': 50, 'font-weight': 'bold', 'color': '#bdc3c7'}
+            style={'margin-left': '20px', 'font-size': 35, 'font-weight': 'bold', 'color': '#bdc3c7'}
         ),
         style={'margin-left': '20px', 'margin-right': '20px', 'margin-top': '20px'}
     )
@@ -125,11 +125,11 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
 
     app.layout = html.Div(
                         [
-                            dbc.Row(
-                                [
-                                    dbc.Col(header_card, width=12),
-                                ]
-                            ),
+                            # dbc.Row(
+                            #     [
+                            #         dbc.Col(header_card, width=12),
+                            #     ]
+                            # ),
                             body
                         ]
                 )

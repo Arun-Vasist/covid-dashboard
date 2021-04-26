@@ -53,9 +53,9 @@ def get_choropleth(state_metrics_df, india_geojson):
 
     layout = go.Layout(
         mapbox_style="carto-positron",
-        mapbox_zoom=4,
+        mapbox_zoom=3.5,
         mapbox_center={"lat": 23.0895, "lon": 81.5},
-        height=700,
+        height=610,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         hoverlabel=dict(
             bgcolor="white",
@@ -90,12 +90,10 @@ def get_date_wise_plot(date_wise_metrics, state, metric):
 
     data = [trace]
 
-    height = 172
-
     layout = go.Layout(
         yaxis=dict(rangemode='tozero'),
-        height=height,
-        width=570,
+        height=142,
+        width=450,
         margin=dict(l=50, r=20, t=10, b=30)
     )
 
@@ -124,12 +122,10 @@ def get_india_date_wise_plot(india_df, metric):
 
     data = [trace]
 
-    height = 172
-
     layout = go.Layout(
         yaxis=dict(rangemode='tozero'),
-        height=height,
-        width=570,
+        height=142,
+        width=450,
         margin=dict(l=50, r=20, t=10, b=30)
     )
 
