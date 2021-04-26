@@ -9,15 +9,15 @@ from graph import get_date_wise_plot, get_choropleth, get_india_date_wise_plot
 reverse_state_id_map = {v: k for k, v in state_id_map.items()}
 
 tooltip_text = {
-    'cases_per_million': 'Cases / Population * 1000000',
+    'cases_per_million': 'SUM(Cases) / SUM(Population) * 1M',
     'case_fatality_rate': 'The proportion of people who died among all individuals diagnosed with Covid up till 15 days ago',
-    'deaths_per_million': 'Deaths / Population * 1000000',
+    'deaths_per_million': 'SUM(Deaths) / SUM(Population) * 1M',
 }
 
 
 def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
-        state_name = 'India'
+        state_name = 'Maharashtra'
         rank = html.H5("-", style={'color': 'white'})
         vs_national_avg = html.H2("-", style={'color': 'white'})
         result = state_metrics_df.loc[state_name, metric]
@@ -48,8 +48,8 @@ def generate_kpi_card_body(click_data, metric, state_metrics_df):
 
 def generate_plot_card_body(click_data, metric, india_df, date_wise_metrics):
     if not click_data:
-        state_name = 'India'
-        plot = get_india_date_wise_plot(india_df, metric)
+        state_name = 'Maharashtra'
+        plot = get_date_wise_plot(date_wise_metrics, state_name, metric)
     else:
         state_id = click_data['points'][0]['location']
         state_name = reverse_state_id_map[state_id]
