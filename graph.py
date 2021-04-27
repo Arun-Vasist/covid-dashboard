@@ -55,7 +55,7 @@ def get_choropleth(state_metrics_df, india_geojson):
         mapbox_style="carto-positron",
         mapbox_zoom=3.5,
         mapbox_center={"lat": 23.0895, "lon": 81.5},
-        height=610,
+        height=560,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         hoverlabel=dict(
             bgcolor="white",

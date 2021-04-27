@@ -17,14 +17,10 @@ tooltip_text = {
 
 def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
-        state_name = 'Maharashtra'
+        state_name = 'India'
         result = state_metrics_df.loc[state_name, metric]
-        color = '#d91e18' if result > state_metrics_df.loc['India', metric] else '#27ae60'
-        vs_national_avg = html.H2(
-            f"{print_delta(now=result, prev=state_metrics_df.loc['India', metric])} vs National Avg",
-            style={'color': color})
-        rank = html.H5(
-            f"Rank : {int(state_metrics_df.loc[state_name, f'{metric}_rank'])} of {state_metrics_df.shape[0] - 1}")
+        vs_national_avg = html.H2('-', style={'color': 'white'})
+        rank = html.H5('-', style={'color': 'white'})
     else:
         state_id = click_data['points'][0]['location']
         state_name = reverse_state_id_map[state_id]
@@ -52,8 +48,8 @@ def generate_kpi_card_body(click_data, metric, state_metrics_df):
 
 def generate_plot_card_body(click_data, metric, india_df, date_wise_metrics):
     if not click_data:
-        state_name = 'Maharashtra'
-        plot = get_date_wise_plot(date_wise_metrics, state_name, metric)
+        state_name = 'India'
+        plot = get_india_date_wise_plot(india_df, metric)
     else:
         state_id = click_data['points'][0]['location']
         state_name = reverse_state_id_map[state_id]
@@ -92,12 +88,20 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
         deaths_plot_card
     ]
 
+    button_style = {
+        'margin-left': '20px',
+        'margin-right': '20px',
+        'margin-bottom': '20px',
+     }
+    button = dbc.Button('Reset', id='india_button', style=button_style)
+
     choropleth_card = dbc.Card(
         [
             html.H4('States with Deaths per million > 250',
                     style={'textAlign': 'center', 'margin-top': '20px'}
                     ),
             choropleth,
+            button
         ]
     )
 
@@ -140,30 +144,35 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
 
     '''KPI Cards'''
 
-    @app.callback(Output("cases_per_million_card", "children"), [Input("choropleth", "clickData")])
-    def render_page_content(click_data):
-        return generate_kpi_card_body(click_data, "cases_per_million", state_metrics_df)
-
-    @app.callback(Output("case_fatality_rate_card", "children"), [Input("choropleth", "clickData")])
-    def render_page_content(click_data):
-        return generate_kpi_card_body(click_data, "case_fatality_rate", state_metrics_df)
-
-    @app.callback(Output("deaths_per_million_card", "children"), [Input("choropleth", "clickData")])
-    def render_page_content(click_data):
-        return generate_kpi_card_body(click_data, "deaths_per_million", state_metrics_df)
-
-    '''Plot cards'''
-
-    @app.callback(Output("confirmed_plot_card", "children"), [Input("choropleth", "clickData")])
-    def render_page_content(click_data):
-        return generate_plot_card_body(click_data, 'Confirmed', india_df, date_wise_metrics)
-
-    @app.callback(Output("case_fatality_rate_plot_card", "children"), [Input("choropleth", "clickData")])
-    def render_page_content(click_data):
-        return generate_plot_card_body(click_data, 'case_fatality_rate', india_df, date_wise_metrics)
-
-    @app.callback(Output("deaths_plot_card", "children"), [Input("choropleth", "clickData")])
-    def render_page_content(click_data):
-        return generate_plot_card_body(click_data, 'Deceased', india_df, date_wise_metrics)
+    @app.callback(
+        [
+            Output("cases_per_million_card", "children"),
+            Output("case_fatality_rate_card", "children"),
+            Output("deaths_per_million_card", "children"),
+            Output("confirmed_plot_card", "children"),
+            Output("case_fatality_rate_plot_card", "children"),
+            Output("deaths_plot_card", "children"),
+         ],
+        [Input("choropleth", "clickData"), Input("india_button", "n_clicks")]
+    )
+    def render_page_content(click_data, _):
+        ctx = dash.callback_context
+        button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+        if button_id == 'choropleth':
+            cases_kpi_card = generate_kpi_card_body(click_data, "cases_per_million", state_metrics_df)
+            cfr_kpi_card = generate_kpi_card_body(click_data, "case_fatality_rate", state_metrics_df)
+            deaths_kpi_card = generate_kpi_card_body(click_data, "deaths_per_million", state_metrics_df)
+            cases_plot_card = generate_plot_card_body(click_data, 'Confirmed', india_df, date_wise_metrics)
+            cfr_plot_card = generate_plot_card_body(click_data, 'case_fatality_rate', india_df, date_wise_metrics)
+            deaths_plot_card = generate_plot_card_body(click_data, 'Deceased', india_df, date_wise_metrics)
+            return cases_kpi_card, cfr_kpi_card, deaths_kpi_card, cases_plot_card, cfr_plot_card, deaths_plot_card
+        else:
+            cases_kpi_card = generate_kpi_card_body(None, "cases_per_million", state_metrics_df)
+            cfr_kpi_card = generate_kpi_card_body(None, "case_fatality_rate", state_metrics_df)
+            deaths_kpi_card = generate_kpi_card_body(None, "deaths_per_million", state_metrics_df)
+            cases_plot_card = generate_plot_card_body(None, 'Confirmed', india_df, date_wise_metrics)
+            cfr_plot_card = generate_plot_card_body(None, 'case_fatality_rate', india_df, date_wise_metrics)
+            deaths_plot_card = generate_plot_card_body(None, 'Deceased', india_df, date_wise_metrics)
+            return cases_kpi_card, cfr_kpi_card, deaths_kpi_card, cases_plot_card, cfr_plot_card, deaths_plot_card
 
     return app
