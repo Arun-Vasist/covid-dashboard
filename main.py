@@ -7,14 +7,10 @@ from india_overall import get_india_df
 from date_wise import get_date_wise_metrics
 import json
 from create_app import create_app
-from config import in_production, avg_days_to_death
+from config import in_production
 
-# TODO States with high death rate
-# TODO choropleth hover text
-# TODO Alignment
-# TODO Click to view - use hand icon?
+
 # TODO Dadra and Nagar Haveli and Daman and Diu
-# TODO Add reset button?
 # TODO Add Navbar
 # TODO Vaccinations
 
@@ -22,7 +18,7 @@ from config import in_production, avg_days_to_death
 df = pd.read_csv('state_wise_daily.csv')
 df = clean_raw_data(df)
 
-india_df = get_india_df(df)
+india_df = get_india_df(df, vaccine_df)
 
 state_population_df = pd.read_csv('population.csv')
 
