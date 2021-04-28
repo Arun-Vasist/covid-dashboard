@@ -55,7 +55,7 @@ def get_choropleth(state_metrics_df, india_geojson):
         mapbox_style="carto-positron",
         mapbox_zoom=3.5,
         mapbox_center={"lat": 23.0895, "lon": 81.5},
-        height=565,
+        # height=565,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         hoverlabel=dict(
             bgcolor="white",
@@ -73,7 +73,9 @@ def get_choropleth(state_metrics_df, india_geojson):
                                 'margin-left': '20px',
                                 'margin-right': '20px',
                                 'margin-bottom': '20px',
-                                'margin-top': '10px'
+                                'margin-top': '10px',
+                                'width': '55vh',
+                                'height': '75vh',
                             }
                 )
     return dash_graph
@@ -92,8 +94,8 @@ def get_date_wise_plot(date_wise_metrics, state, metric):
 
     layout = go.Layout(
         yaxis=dict(rangemode='tozero'),
-        height=126,
-        width=430,
+        # height=126,
+        # width=430,
         margin=dict(l=40, r=0, t=10, b=30)
     )
 
@@ -103,13 +105,15 @@ def get_date_wise_plot(date_wise_metrics, state, metric):
     dash_graph = dcc.Graph(figure={
         'data': data,
         'layout': layout
-    },
+        },
         style={
             'margin-left': '20px',
             'margin-right': '20px',
             'margin-bottom': '0px',
-            'margin-top': '0px'
-        }
+            'margin-top': '0px',
+            'width': '55vh',
+            'height': '16.75vh',
+        },
     )
 
     return dash_graph
@@ -130,8 +134,8 @@ def get_india_date_wise_plot(india_df, metric):
 
     layout = go.Layout(
         yaxis=dict(rangemode='tozero'),
-        height=126,
-        width=430,
+        # height=126,
+        # width=430,
         margin=dict(l=40, r=0, t=10, b=30)
     )
 
@@ -146,8 +150,10 @@ def get_india_date_wise_plot(india_df, metric):
             'margin-left': '20px',
             'margin-right': '20px',
             'margin-bottom': '0px',
-            'margin-top': '0px'
-        }
+            'margin-top': '0px',
+            'width': '55vh',
+            'height': '16.75vh',
+        },
     )
 
     return dash_graph

@@ -66,7 +66,9 @@ def generate_plot_card_body(click_data, metric, india_df, date_wise_metrics):
 
     card_body = dbc.CardBody([
         html.H5(f"{state_name} - {fix_name(metric)}"),
-        dbc.Row(plot)
+        dbc.Row(
+            dbc.Col(plot, width=12)
+        )
     ], style=card_body_style)
 
     return card_body
