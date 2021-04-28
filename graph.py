@@ -70,10 +70,6 @@ def get_choropleth(state_metrics_df, india_geojson):
                             },
                             id='choropleth',
                             style={
-                                # 'margin-left': '20px',
-                                # 'margin-right': '10px',
-                                # 'margin-bottom': '20px',
-                                # 'margin-top': '10px',
                                 'margin': 'auto',
                                 'width': '57.5vh',
                                 'height': '75vh',
@@ -108,9 +104,9 @@ def get_date_wise_plot(date_wise_metrics, state, metric):
         'layout': layout
         },
         style={
-            'margin-left': '20px',
-            'margin-right': '20px',
-            'margin-bottom': '0px',
+            'margin-left': '3vh',
+            'margin-right': '3vh',
+            'margin-bottom': '0vh',
             'margin-top': '0px',
             'width': '55vh',
             'height': '16.75vh',
@@ -148,9 +144,9 @@ def get_india_date_wise_plot(india_df, metric):
         'layout': layout
     },
         style={
-            'margin-left': '20px',
-            'margin-right': '20px',
-            'margin-bottom': '0px',
+            'margin-left': '3vh',
+            'margin-right': '3vh',
+            'margin-bottom': '0vh',
             'margin-top': '0px',
             'width': '55vh',
             'height': '16.75vh',

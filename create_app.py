@@ -15,7 +15,7 @@ tooltip_text = {
     'deaths_per_million': 'SUM(Deaths) / SUM(Population) * 1M',
 }
 
-card_body_style = {'textAlign': 'center', 'padding': '5px'}
+card_body_style = {'textAlign': 'center', 'padding': '0.5vh'}
 
 def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
@@ -53,8 +53,6 @@ def generate_kpi_card_body(click_data, metric, state_metrics_df):
     return card_body
 
 
-plot_card_body_style = {'textAlign': 'center', 'padding-top': '10px', 'padding-bottom': '10px', 'padding-left': '20px', 'padding-right': '0px'}
-
 def generate_plot_card_body(click_data, metric, india_df, date_wise_metrics):
     if not click_data:
         state_name = 'India'
@@ -79,7 +77,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
 
     app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-    card_style = {'margin-bottom': '10px', 'padding-bottom': '0px', 'height': '22vh'}
+    card_style = {'margin-bottom': '2vh', 'padding-bottom': '0vh', 'height': '22vh'}
     pct_vaccinated_card = dbc.Card(id='pct_vaccinated_card', style=card_style)
     cases_per_million_card = dbc.Card(id='cases_per_million_card', style=card_style)
     case_fatality_rate_card = dbc.Card(id='case_fatality_rate_card', style=card_style)
@@ -115,12 +113,12 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
     choropleth_card = dbc.Card(
         [
             html.H4('States with Deaths per million > 250',
-                    style={'textAlign': 'center', 'margin-top': '20px', 'font-size': '3.5vh'}
+                    style={'textAlign': 'center', 'margin-top': '2vh', 'font-size': '3.5vh'}
                     ),
             choropleth,
             button
         ],
-        style={'height': '92vh'}
+        style={'height': '93.5vh'}
     )
 
     body = html.Div(
@@ -138,7 +136,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
                 ]
             )
         ],
-        style={'margin': '10px'}
+        style={'margin': '2vh'}
     )
 
     app.layout = html.Div(

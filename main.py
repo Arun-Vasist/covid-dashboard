@@ -33,8 +33,8 @@ moving_avg_df = moving_avg_df.rolling(7).mean()
 date_mask = moving_avg_df.index >= '2020-07-01'
 app = create_app(moving_avg_df[date_mask], state_metrics_df, india_df, india_geojson)
 
-server = app.server
-# if in_production:
-#     server = app.server
-# else:
-#     app.run_server()
+# server = app.server
+if in_production:
+    server = app.server
+else:
+    app.run_server()
