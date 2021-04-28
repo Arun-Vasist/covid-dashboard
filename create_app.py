@@ -79,7 +79,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
 
     app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-    card_style = {'margin-bottom': '10px', 'padding-bottom': '0px'}
+    card_style = {'margin-bottom': '10px', 'padding-bottom': '0px', 'height': '22vh'}
     pct_vaccinated_card = dbc.Card(id='pct_vaccinated_card', style=card_style)
     cases_per_million_card = dbc.Card(id='cases_per_million_card', style=card_style)
     case_fatality_rate_card = dbc.Card(id='case_fatality_rate_card', style=card_style)
@@ -118,15 +118,8 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
                     ),
             choropleth,
             button
-        ]
-    )
-
-    header_card = dbc.Card(
-        html.H1(
-            'India Covid Dashboard',
-            style={'margin-left': '20px', 'font-size': 35, 'font-weight': 'bold', 'color': '#bdc3c7'}
-        ),
-        style={'margin-left': '20px', 'margin-right': '20px', 'margin-top': '20px'}
+        ],
+        style={'height':'92vh'}
     )
 
     body = html.Div(
