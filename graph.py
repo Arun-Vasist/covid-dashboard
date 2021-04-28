@@ -55,7 +55,7 @@ def get_choropleth(state_metrics_df, india_geojson):
         mapbox_style="carto-positron",
         mapbox_zoom=3.5,
         mapbox_center={"lat": 23.0895, "lon": 81.5},
-        height=570,
+        height=565,
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         hoverlabel=dict(
             bgcolor="white",
@@ -92,12 +92,12 @@ def get_date_wise_plot(date_wise_metrics, state, metric):
 
     layout = go.Layout(
         yaxis=dict(rangemode='tozero'),
-        height=110,
+        height=126,
         width=430,
-        margin=dict(l=40, r=0, t=10, b=20)
+        margin=dict(l=40, r=0, t=10, b=30)
     )
 
-    if metric == 'case_fatality_rate':
+    if metric in ['case_fatality_rate', 'pct_vaccinated']:
         layout['yaxis'] = dict(tickformat='%', rangemode='tozero')
 
     dash_graph = dcc.Graph(figure={
@@ -130,12 +130,12 @@ def get_india_date_wise_plot(india_df, metric):
 
     layout = go.Layout(
         yaxis=dict(rangemode='tozero'),
-        height=110,
+        height=126,
         width=430,
-        margin=dict(l=40, r=0, t=10, b=20)
+        margin=dict(l=40, r=0, t=10, b=30)
     )
 
-    if metric == 'case_fatality_rate':
+    if metric in ['case_fatality_rate', 'pct_vaccinated']:
         layout['yaxis'] = dict(tickformat='%', rangemode='tozero')
 
     dash_graph = dcc.Graph(figure={

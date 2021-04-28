@@ -1,6 +1,5 @@
-import numpy as np
 import pandas as pd
-from helper import clean_raw_data, filter_status, get_confirmed_cum_sum_df, modify_geojson, get_modified_state_metrics_df
+from helper import clean_raw_data, modify_geojson, get_modified_state_metrics_df
 from vaccine import vaccine_df
 from state_level import get_state_metrics_df
 from india_overall import get_india_df
@@ -9,10 +8,8 @@ import json
 from create_app import create_app
 from config import in_production
 
-
 # TODO Dadra and Nagar Haveli and Daman and Diu
 # TODO Add Navbar
-# TODO Vaccinations
 
 
 df = pd.read_csv('state_wise_daily.csv')

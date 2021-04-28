@@ -30,10 +30,10 @@ def get_date_wise_metrics(df, state_population_df, vaccine_df):
             date_wise_metrics[('case_fatality_rate', state)] = date_wise_metrics[('Deceased', state)] / \
                                                                date_wise_metrics[col].shift(avg_days_to_death)
             date_wise_metrics[('cases_per_million', state)] = date_wise_metrics[('Confirmed', state)] / \
-                                                              date_wise_metrics[('population', state)]
+                                                              date_wise_metrics[('population', state)] * 1000000
             date_wise_metrics[('deaths_per_million', state)] = date_wise_metrics[('Deceased', state)] / \
-                                                               date_wise_metrics[('population', state)]
-            date_wise_metrics[('vaccinations_per_million', state)] = date_wise_metrics[('vaccinations', state)] / \
+                                                               date_wise_metrics[('population', state)] * 1000000
+            date_wise_metrics[('pct_vaccinated', state)] = date_wise_metrics[('vaccinations', state)] / \
                                                                      date_wise_metrics[('population', state)]
 
     date_wise_metrics = date_wise_metrics.applymap(lambda x: np.nan if x == np.inf else x)

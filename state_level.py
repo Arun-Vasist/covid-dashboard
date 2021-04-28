@@ -25,7 +25,7 @@ def get_state_metrics_df(df, vaccine_df, state_population_df):
 
     state_metrics_df['cases_per_million'] = state_metrics_df['Confirmed'] / state_metrics_df['population'] * 1000000
     state_metrics_df['deaths_per_million'] = state_metrics_df['Deceased'] / state_metrics_df['population'] * 1000000
-    state_metrics_df['vaccinations_per_million'] = state_metrics_df['vaccinations'] / state_metrics_df['population'] * 1000000
+    state_metrics_df['pct_vaccinated'] = state_metrics_df['vaccinations'] / state_metrics_df['population']
     state_metrics_df['case_fatality_rate'] = state_metrics_df['Deceased'] / state_metrics_df['Confirmed']
     
     for metric in state_metrics_df:
@@ -35,7 +35,7 @@ def get_state_metrics_df(df, vaccine_df, state_population_df):
 
     state_metrics_df['cases_per_million'] = state_metrics_df['Confirmed'] / state_metrics_df['population'] * 1000000
     state_metrics_df['deaths_per_million'] = state_metrics_df['Deceased'] / state_metrics_df['population'] * 1000000
-    state_metrics_df['vaccinations_per_million'] = state_metrics_df['vaccinations'] / state_metrics_df['population'] * 1000000
+    state_metrics_df['pct_vaccinated'] = state_metrics_df['vaccinations'] / state_metrics_df['population']
     state_metrics_df['case_fatality_rate'] = state_metrics_df['Deceased'] / state_metrics_df['Confirmed']
 
     return state_metrics_df

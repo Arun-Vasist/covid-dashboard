@@ -20,7 +20,7 @@ def get_india_df(df, vaccine_df):
     india_df.set_index('Date', inplace=True)
     india_df['cases_per_million'] = india_df['Confirmed'] / india_df['population'] * 1000000
     india_df['deaths_per_million'] = india_df['Deceased'] / india_df['population'] * 1000000
-    india_df['vaccinations_per_million'] = india_df['Deceased'] / india_df['population'] * 1000000
+    india_df['pct_vaccinated'] = india_df['Deceased'] / india_df['population']
     india_df['case_fatality_rate'] = india_df['Deceased'] / india_df['Confirmed'].shift(avg_days_to_death)
 
     return india_df
