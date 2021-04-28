@@ -70,11 +70,12 @@ def get_choropleth(state_metrics_df, india_geojson):
                             },
                             id='choropleth',
                             style={
-                                'margin-left': '20px',
-                                'margin-right': '20px',
-                                'margin-bottom': '20px',
-                                'margin-top': '10px',
-                                'width': '55vh',
+                                # 'margin-left': '20px',
+                                # 'margin-right': '10px',
+                                # 'margin-bottom': '20px',
+                                # 'margin-top': '10px',
+                                'margin': 'auto',
+                                'width': '57.5vh',
                                 'height': '75vh',
                             }
                 )

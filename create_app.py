@@ -21,8 +21,8 @@ def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
         state_name = 'India'
         result = state_metrics_df.loc[state_name, metric]
-        vs_national_avg = html.H3('-', style={'color': 'white', 'font-size': 32})
-        rank = html.H6('-', style={'color': 'white', 'font-size': 20})
+        vs_national_avg = html.H3('-', style={'color': 'white', 'font-size': '4.5vh'})
+        rank = html.H6('-', style={'color': 'white', 'font-size': '2.5vh'})
     else:
         state_id = click_data['points'][0]['location']
         state_name = reverse_state_id_map[state_id]
@@ -33,16 +33,16 @@ def generate_kpi_card_body(click_data, metric, state_metrics_df):
             color = '#d91e18' if result > state_metrics_df.loc['India', metric] else '#27ae60'
         vs_national_avg = html.H3(
             f"{print_delta(now=result, prev=state_metrics_df.loc['India', metric])} vs National Avg",
-                                  style={'color': color, 'font-size': 32})
+                                  style={'color': color, 'font-size': '4.5vh'})
         rank = html.H6(f"Rank : {int(state_metrics_df.loc[state_name, f'{metric}_rank'])} of {state_metrics_df.shape[0] - 1}",
-                       style={'font-size': 20})
+                       style={'font-size': '2.5vh'})
 
     card_body = dbc.CardBody([
                     html.H5(f'{state_name} - {fix_name(metric)}',
                             id=f'kpi_{metric}_header',
-                            style={"textDecoration": "underline", "cursor": "pointer", 'font-size': 20}),
+                            style={"textDecoration": "underline", "cursor": "pointer", 'font-size': '3vh'}),
                     html.H1(print_formatted(result, metric),
-                            style={'font-weight': 'bold', 'font-size': 40, 'margin-bottom': 0}),
+                            style={'font-weight': 'bold', 'font-size': '5.2vh', 'margin-bottom': 0}),
                     vs_national_avg,
                     rank,
                     dbc.Tooltip(tooltip_text[metric], target=f'kpi_{metric}_header')
@@ -65,7 +65,7 @@ def generate_plot_card_body(click_data, metric, india_df, date_wise_metrics):
         plot = get_date_wise_plot(date_wise_metrics, state_name, metric)
 
     card_body = dbc.CardBody([
-        html.H5(f"{state_name} - {fix_name(metric)}"),
+        html.H5(f"{state_name} - {fix_name(metric)}", style={'font-size': '3vh'}),
         dbc.Row(
             dbc.Col(plot, width=12)
         )
@@ -105,21 +105,22 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
     ]
 
     button_style = {
-        'margin-left': '20px',
-        'margin-right': '20px',
-        'margin-bottom': '20px',
+        'font-size': '2.25vh',
+        'height': '5vh',
+        'width': '28vw',
+        'margin': 'auto',
      }
     button = dbc.Button('Show overall', id='india_button', style=button_style)
 
     choropleth_card = dbc.Card(
         [
             html.H4('States with Deaths per million > 250',
-                    style={'textAlign': 'center', 'margin-top': '20px'}
+                    style={'textAlign': 'center', 'margin-top': '20px', 'font-size': '3.5vh'}
                     ),
             choropleth,
             button
         ],
-        style={'height':'92vh'}
+        style={'height': '92vh'}
     )
 
     body = html.Div(
