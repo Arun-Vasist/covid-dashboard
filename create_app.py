@@ -78,10 +78,16 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
     app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
     card_style = {'margin-bottom': '2vh', 'padding-bottom': '0vh', 'height': '22vh'}
+
     pct_vaccinated_card = dbc.Card(id='pct_vaccinated_card', style=card_style)
     cases_per_million_card = dbc.Card(id='cases_per_million_card', style=card_style)
     case_fatality_rate_card = dbc.Card(id='case_fatality_rate_card', style=card_style)
     deaths_per_million_card = dbc.Card(id='deaths_per_million_card', style=card_style)
+
+    pct_vaccinated_card = dbc.Spinner(pct_vaccinated_card)
+    cases_per_million_card = dbc.Spinner(cases_per_million_card)
+    case_fatality_rate_card = dbc.Spinner(case_fatality_rate_card)
+    deaths_per_million_card = dbc.Spinner(deaths_per_million_card)
 
     kpi_cards = [
         pct_vaccinated_card,
@@ -94,6 +100,11 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
     confirmed_plot_card = dbc.Card(id='confirmed_plot_card', style=card_style)
     case_fatality_rate_plot_card = dbc.Card(id='case_fatality_rate_plot_card', style=card_style)
     deaths_plot_card = dbc.Card(id='deaths_plot_card', style=card_style)
+
+    vaccinations_plot_card = dbc.Spinner(vaccinations_plot_card)
+    confirmed_plot_card = dbc.Spinner(confirmed_plot_card)
+    case_fatality_rate_plot_card = dbc.Spinner(case_fatality_rate_plot_card)
+    deaths_plot_card = dbc.Spinner(deaths_plot_card)
 
     plots = [
         vaccinations_plot_card,
@@ -121,6 +132,8 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
         style={'height': '93.5vh'}
     )
 
+    choropleth_card = dbc.Spinner(choropleth_card, )
+
     body = html.Div(
         [
             dbc.Row(
@@ -128,13 +141,20 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
                     dbc.Col(kpi_cards, width=4),
                     dbc.Col(plots, width=4),
                     dbc.Col(choropleth_card, width=4),
-                    dbc.Col(html.H1(id='test')),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
-                    html.Br(),
                 ]
-            )
+            ),
+            dbc.Row(
+                [
+                    dbc.Col(
+                        html.P("Data last updated on 14th May 2021", style={'text-align': 'right'}),
+                        width={"size": 4, "order": "last", "offset": 8}
+                    ),
+                ]
+            ),
+            html.Br(),
+            html.Br(),
+            html.Br(),
+            html.Br(),
         ],
         style={'margin': '2vh'}
     )
