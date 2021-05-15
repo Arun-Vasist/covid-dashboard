@@ -9,7 +9,7 @@ from graph import get_date_wise_plot, get_choropleth, get_india_date_wise_plot
 reverse_state_id_map = {v: k for k, v in state_id_map.items()}
 
 tooltip_text = {
-    'pct_fully_vaccinated': 'SUM(Population fully vaccinated) / SUM(Population) * 100',
+    'pct_fully_vaccinated': 'SUM(Population who received second dose) / SUM(Population) * 100',
     'cases_per_million': 'SUM(Cases) / SUM(Population) * 1M',
     'case_fatality_rate': 'The proportion of people who died among all individuals diagnosed with Covid up till 15 days ago',
     'deaths_per_million': 'SUM(Deaths) / SUM(Population) * 1M',
@@ -64,10 +64,10 @@ def generate_plot_card_body(click_data, metric, india_df, date_wise_metrics):
         plot = get_date_wise_plot(date_wise_metrics, state_name, metric)
 
     card_body = dbc.CardBody([
-        html.H5(f"{state_name} - {fix_name(metric)}", style={'font-size': '3vh'}),
+        html.H5(f"{state_name} - {fix_name(metric)}", id=f'plot_{metric}_header', style={'font-size': '3vh'}),
         dbc.Row(
             dbc.Col(plot, width=12)
-        )
+        ),
     ], style=card_body_style)
 
     return card_body

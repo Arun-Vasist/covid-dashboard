@@ -126,7 +126,6 @@ def get_india_date_wise_plot(india_df, metric):
         marker_color='blue',
         hovertemplate='%{y:,%}<extra></extra>' if metric == 'case_fatality_rate' else '%{y:.0f}<extra></extra>'
     )
-
     data = [trace]
 
     layout = go.Layout(
