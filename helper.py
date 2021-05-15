@@ -129,12 +129,10 @@ def get_confirmed_cum_sum_df(confirmed_df):
     return confirmed_cum_sum_df
 
 
-confirmed_cases_peak = 'Sept 16'
-
 def add_derived_metrics(df):
     df['cases_per_million'] = df['Confirmed'] / df['population'] * 1000000
     df['deaths_per_million'] = df['Deceased'] / df['population'] * 1000000
-    df['pct_vaccinated'] = df['vaccinations'] / df['population']
+    df['pct_fully_vaccinated'] = df['second_doses'] / df['population']
     df['case_fatality_rate'] = df['Deceased'] / df['Confirmed'].shift(avg_days_to_death)
 
     return df
@@ -164,7 +162,7 @@ def human_format(num):
 
 def print_formatted(value, metric):
     metric = metric.lower()
-    if metric.endswith('rate') or metric == 'pct_vaccinated':
+    if metric.endswith('rate') or metric == 'pct_fully_vaccinated':
         return f"{100*value:.2f}%"
     else:
         return human_format(value)
@@ -196,8 +194,8 @@ def fix_name(metric):
         return 'Cases'
     if metric == 'Deceased':
         return 'Deaths'
-    if metric == 'pct_vaccinated':
-        return 'Percentage vaccinated'
+    if metric == 'pct_fully_vaccinated':
+        return 'Pct fully vaccinated'
     metric = ' '.join(metric.split('_'))
     return metric.title()
 

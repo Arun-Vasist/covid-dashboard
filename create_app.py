@@ -9,13 +9,14 @@ from graph import get_date_wise_plot, get_choropleth, get_india_date_wise_plot
 reverse_state_id_map = {v: k for k, v in state_id_map.items()}
 
 tooltip_text = {
-    'pct_vaccinated': 'SUM(Vaccinations) / SUM(Population)',
+    'pct_fully_vaccinated': 'SUM(Population fully vaccinated) / SUM(Population) * 100',
     'cases_per_million': 'SUM(Cases) / SUM(Population) * 1M',
     'case_fatality_rate': 'The proportion of people who died among all individuals diagnosed with Covid up till 15 days ago',
     'deaths_per_million': 'SUM(Deaths) / SUM(Population) * 1M',
 }
 
 card_body_style = {'textAlign': 'center', 'padding': '0.5vh'}
+
 
 def generate_kpi_card_body(click_data, metric, state_metrics_df):
     if not click_data:
@@ -79,18 +80,18 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
 
     card_style = {'margin-bottom': '2vh', 'padding-bottom': '0vh', 'height': '22vh'}
 
-    pct_vaccinated_card = dbc.Card(id='pct_vaccinated_card', style=card_style)
+    pct_fully_vaccinated_card = dbc.Card(id='pct_fully_vaccinated_card', style=card_style)
     cases_per_million_card = dbc.Card(id='cases_per_million_card', style=card_style)
     case_fatality_rate_card = dbc.Card(id='case_fatality_rate_card', style=card_style)
     deaths_per_million_card = dbc.Card(id='deaths_per_million_card', style=card_style)
 
-    pct_vaccinated_card = dbc.Spinner(pct_vaccinated_card)
+    pct_fully_vaccinated_card = dbc.Spinner(pct_fully_vaccinated_card)
     cases_per_million_card = dbc.Spinner(cases_per_million_card)
     case_fatality_rate_card = dbc.Spinner(case_fatality_rate_card)
     deaths_per_million_card = dbc.Spinner(deaths_per_million_card)
 
     kpi_cards = [
-        pct_vaccinated_card,
+        pct_fully_vaccinated_card,
         cases_per_million_card,
         case_fatality_rate_card,
         deaths_per_million_card,
@@ -167,7 +168,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
 
     @app.callback(
         [
-            Output("pct_vaccinated_card", "children"),
+            Output("pct_fully_vaccinated_card", "children"),
             Output("cases_per_million_card", "children"),
             Output("case_fatality_rate_card", "children"),
             Output("deaths_per_million_card", "children"),
@@ -182,7 +183,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
         ctx = dash.callback_context
         button_id = ctx.triggered[0]['prop_id'].split('.')[0]
         if button_id == 'choropleth':
-            vaccinations_kpi_card = generate_kpi_card_body(click_data, "pct_vaccinated", state_metrics_df)
+            vaccinations_kpi_card = generate_kpi_card_body(click_data, "pct_fully_vaccinated", state_metrics_df)
             cases_kpi_card = generate_kpi_card_body(click_data, "cases_per_million", state_metrics_df)
             cfr_kpi_card = generate_kpi_card_body(click_data, "case_fatality_rate", state_metrics_df)
             deaths_kpi_card = generate_kpi_card_body(click_data, "deaths_per_million", state_metrics_df)
@@ -192,7 +193,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
             deaths_plot_card = generate_plot_card_body(click_data, 'Deceased', india_df, date_wise_metrics)
             return vaccinations_kpi_card, cases_kpi_card, cfr_kpi_card, deaths_kpi_card, vaccinations_plot_card, cases_plot_card, cfr_plot_card, deaths_plot_card
         else:
-            vaccinations_kpi_card = generate_kpi_card_body(None, "pct_vaccinated", state_metrics_df)
+            vaccinations_kpi_card = generate_kpi_card_body(None, "pct_fully_vaccinated", state_metrics_df)
             cases_kpi_card = generate_kpi_card_body(None, "cases_per_million", state_metrics_df)
             cfr_kpi_card = generate_kpi_card_body(None, "case_fatality_rate", state_metrics_df)
             deaths_kpi_card = generate_kpi_card_body(None, "deaths_per_million", state_metrics_df)

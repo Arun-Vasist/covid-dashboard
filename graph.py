@@ -96,7 +96,7 @@ def get_date_wise_plot(date_wise_metrics, state, metric):
         margin=dict(l=40, r=0, t=10, b=30)
     )
 
-    if metric in ['case_fatality_rate', 'pct_vaccinated']:
+    if metric in ['case_fatality_rate', 'pct_fully_vaccinated']:
         layout['yaxis'] = dict(tickformat='%', rangemode='tozero')
 
     dash_graph = dcc.Graph(figure={
@@ -136,7 +136,7 @@ def get_india_date_wise_plot(india_df, metric):
         margin=dict(l=40, r=0, t=10, b=30)
     )
 
-    if metric in ['case_fatality_rate', 'pct_vaccinated']:
+    if metric in ['case_fatality_rate', 'pct_fully_vaccinated']:
         layout['yaxis'] = dict(tickformat='%', rangemode='tozero')
 
     dash_graph = dcc.Graph(figure={

@@ -33,7 +33,7 @@ def get_date_wise_metrics(df, state_population_df, vaccine_df):
                                                               date_wise_metrics[('population', state)] * 1000000
             date_wise_metrics[('deaths_per_million', state)] = date_wise_metrics[('Deceased', state)] / \
                                                                date_wise_metrics[('population', state)] * 1000000
-            date_wise_metrics[('pct_vaccinated', state)] = date_wise_metrics[('vaccinations', state)] / \
+            date_wise_metrics[('pct_fully_vaccinated', state)] = date_wise_metrics[('second_doses', state)] / \
                                                                      date_wise_metrics[('population', state)]
 
     date_wise_metrics = date_wise_metrics.applymap(lambda x: np.nan if x == np.inf else x)

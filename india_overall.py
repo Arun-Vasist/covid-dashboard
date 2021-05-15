@@ -1,6 +1,6 @@
 import pandas as pd
-from helper import add_derived_metrics
 from config import avg_days_to_death
+from helper import add_derived_metrics
 
 
 def get_india_df(df, vaccine_df):
@@ -18,10 +18,11 @@ def get_india_df(df, vaccine_df):
     india_mask = vaccine_df['state'] == 'India'
     india_df = pd.merge(india_df, vaccine_df[india_mask], how='left', on='Date')
     india_df.set_index('Date', inplace=True)
-    india_df['cases_per_million'] = india_df['Confirmed'] / india_df['population'] * 1000000
-    india_df['deaths_per_million'] = india_df['Deceased'] / india_df['population'] * 1000000
-    india_df['pct_vaccinated'] = india_df['Deceased'] / india_df['population']
-    india_df['case_fatality_rate'] = india_df['Deceased'] / india_df['Confirmed'].shift(avg_days_to_death)
+    india_df = add_derived_metrics(india_df)
+    # india_df['cases_per_million'] = india_df['Confirmed'] / india_df['population'] * 1000000
+    # india_df['deaths_per_million'] = india_df['Deceased'] / india_df['population'] * 1000000
+    # india_df['pct_fully_vaccinated'] = india_df['second_doses'] / india_df['population']
+    # india_df['case_fatality_rate'] = india_df['Deceased'] / india_df['Confirmed'].shift(avg_days_to_death)
 
     return india_df
 
