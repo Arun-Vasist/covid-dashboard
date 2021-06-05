@@ -147,7 +147,7 @@ def create_app(date_wise_metrics, state_metrics_df, india_df, india_geojson):
             dbc.Row(
                 [
                     dbc.Col(
-                        html.P("Data last updated on 14th May 2021", style={'text-align': 'right'}),
+                        html.P("Data last updated on 4th June 2021", style={'text-align': 'right'}),
                         width={"size": 4, "order": "last", "offset": 8}
                     ),
                 ]
